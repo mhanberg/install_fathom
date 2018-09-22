@@ -18,12 +18,15 @@ FATHOM_DATABASE_NAME="fathom.db"
 FATHOM_SECRET=$secret
 EOL
 
-read -r -p "email: " EMAIL
-read -rs -p "password: " PASSWORD
+echo 'Enter your email:'
+read -r EMAIL
+echo 'Enter your password:'
+read  -r PASSWORD
 
 fathom --config=/opt/fathom/fathom.env register --email="$EMAIL" --password="$PASSWORD"
 
-read -r -p "domain: " DOMAIN
+echo 'Enter your domain name:'
+read -r DOMAIN
 
 cat > /etc/sites-enabled/"$DOMAIN" <<EOL
 server {
