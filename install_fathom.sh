@@ -28,7 +28,7 @@ fathom --config=/opt/fathom/fathom.env register --email="$EMAIL" --password="$PA
 echo 'Enter your domain name:'
 read -r DOMAIN
 
-cat > /etc/sites-enabled/"$DOMAIN" <<EOL
+cat > /etc/nginx/sites-enabled/"$DOMAIN" <<EOL
 server {
 	server_name "$DOMAIN";
 
