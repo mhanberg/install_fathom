@@ -1,4 +1,5 @@
-set -ev
+#!/usr/bin/env bash
+set -e
 
 # exit if required programs arent installed
 hash wget || exit 1
