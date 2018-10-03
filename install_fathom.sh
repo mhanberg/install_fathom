@@ -10,7 +10,9 @@ wget https://github.com/usefathom/fathom/releases/download/latest/fathom-linux-a
 mv fathom-linux-amd64 /usr/local/bin/fathom
 chmod +x /usr/local/bin/fathom
 
-mkdir /opt/fathom
+if [ ! -d /opt/fathom ]; then
+  mkdir /opt/fathom
+fi
 secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 25 ; echo '')
 cat > /opt/fathom/fathom.env <<EOL
 FATHOM_SERVER_ADDR=9000
