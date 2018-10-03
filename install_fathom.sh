@@ -61,7 +61,7 @@ After=network.target
 
 [Service]
 Type=simple
-User=root
+User="$USER"
 Restart=always
 RestartSec=3
 ExecStart=/usr/local/bin/fathom --config=/opt/fathom/fathom.env server
