@@ -17,7 +17,7 @@ secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 25 ; echo '')
 cat > /opt/fathom/fathom.env <<EOL
 FATHOM_SERVER_ADDR=9000
 FATHOM_DATABASE_DRIVER="sqlite3"
-FATHOM_DATABASE_NAME="fathom.db"
+FATHOM_DATABASE_NAME="/opt/fathom/fathom.db"
 FATHOM_SECRET=$secret
 EOL
 
