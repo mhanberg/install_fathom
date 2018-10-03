@@ -21,12 +21,17 @@ FATHOM_DATABASE_NAME="/opt/fathom/fathom.db"
 FATHOM_SECRET=$secret
 EOL
 
+
+(
+cd /opt/fathom
+
 echo 'Enter your email:'
 read -r EMAIL
 echo 'Enter your password:'
 read  -r PASSWORD
 
 fathom --config=/opt/fathom/fathom.env register --email="$EMAIL" --password="$PASSWORD"
+)
 
 echo 'Enter your domain name:'
 read -r DOMAIN
