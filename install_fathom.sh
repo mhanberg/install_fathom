@@ -28,7 +28,7 @@ cd /opt/fathom
 echo 'Enter your email:'
 read -r EMAIL
 echo 'Enter your password:'
-read  -r PASSWORD
+read  -rs PASSWORD
 
 fathom --config=/opt/fathom/fathom.env register --email="$EMAIL" --password="$PASSWORD"
 )
