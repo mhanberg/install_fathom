@@ -6,7 +6,7 @@ hash wget || exit 1
 hash nginx || exit 1
 hash certbot || exit 1
 
-wget https://github.com/usefathom/fathom/releases/download/latest/fathom-linux-amd64
+wget https://github.com/usefathom/fathom/releases/download/latest-development/fathom-linux-amd64
 mv fathom-linux-amd64 /usr/local/bin/fathom
 chmod +x /usr/local/bin/fathom
 
@@ -30,7 +30,7 @@ read -r EMAIL
 echo 'Enter your password:'
 read  -rs PASSWORD
 
-fathom --config=/opt/fathom/fathom.env register --email="$EMAIL" --password="$PASSWORD"
+fathom --config=/opt/fathom/fathom.env user add --email="$EMAIL" --password="$PASSWORD"
 )
 
 echo 'Enter your domain name:'
