@@ -12,7 +12,7 @@ This script administers:
 ## Usage
 
 ```bash
-sudo bash <(curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/mhanberg/install_fathom/master/install_fathom.sh)
+sudo bash <(curl https://raw.githubusercontent.com/mhanberg/install_fathom/master/install_fathom.sh)
 ```
 
 ## Disclaimer
