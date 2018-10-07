@@ -7,20 +7,21 @@ hash nginx || exit 1
 hash certbot || exit 1
 
 wget https://github.com/usefathom/fathom/releases/download/latest-development/fathom-linux-amd64
-mv fathom-linux-amd64 /usr/local/bin/fathom
-chmod +x /usr/local/bin/fathom
+sudo mv fathom-linux-amd64 /usr/local/bin/fathom
+sudo chmod +x /usr/local/bin/fathom
 
 if [ ! -d /opt/fathom ]; then
-  mkdir /opt/fathom
+  sudo mkdir /opt/fathom
 fi
 secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 25 ; echo '')
-cat > /opt/fathom/fathom.env <<EOL
+envfile=$(cat <<EOL
 FATHOM_SERVER_ADDR=9000
 FATHOM_DATABASE_DRIVER="sqlite3"
 FATHOM_DATABASE_NAME="/opt/fathom/fathom.db"
 FATHOM_SECRET=$secret
 EOL
-
+)
+echo "$envfile"| sudo tee /opt/fathom/fathom.env > /dev/null
 
 (
 cd /opt/fathom
@@ -30,13 +31,13 @@ read -r EMAIL
 echo 'Enter your password:'
 read  -rs PASSWORD
 
-fathom --config=/opt/fathom/fathom.env user add --email="$EMAIL" --password="$PASSWORD"
+sudo fathom --config=/opt/fathom/fathom.env user add --email="$EMAIL" --password="$PASSWORD"
 )
 
 echo 'Enter your domain name:'
 read -r DOMAIN
 
-cat > /etc/nginx/sites-enabled/"$DOMAIN" <<EOL
+nginxconf=$(cat <<EOL
 server {
 	server_name "$DOMAIN";
 
@@ -48,12 +49,14 @@ server {
 	}
 }
 EOL
+)
+echo "$nginxconf" | sudo tee /etc/nginx/sites-enabled/"$DOMAIN" > /dev/null
 
-nginx -t
+sudo nginx -t
 
-nginx -s reload
+sudo nginx -s reload
 
-cat > /etc/systemd/system/fathom.service <<EOL
+systemdunit=$(cat <<EOL
 [Unit]
 Description=Starts the fathom server
 Requires=network.target
@@ -69,10 +72,12 @@ ExecStart=/usr/local/bin/fathom --config=/opt/fathom/fathom.env server
 [Install]
 WantedBy=multi-user.target
 EOL
+)
+echo "$systemdunit" | sudo tee /etc/systemd/system/fathom.service > /dev/null
 
 systemctl daemon-reload
 systemctl enable fathom
 
 systemctl start fathom
 
-certbot --nginx -d "$DOMAIN"
+sudo certbot --nginx -d "$DOMAIN"
