@@ -75,9 +75,9 @@ EOL
 )
 echo "$systemdunit" | sudo tee /etc/systemd/system/fathom.service > /dev/null
 
-systemctl daemon-reload
-systemctl enable fathom
+sudo systemctl daemon-reload
+sudo systemctl enable fathom
 
-systemctl start fathom
+sudo systemctl start fathom
 
 sudo certbot --nginx -d "$DOMAIN"
